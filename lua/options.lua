@@ -1,9 +1,17 @@
 -- general settings
 vim.cmd("set number")
-vim.cmd("set relativenumber")
+vim.cmd("set norelativenumber") -- Désactivé : numéros absolus uniquement
 vim.cmd("set ts=2")
-vim.cmd("set cmdheight=0")
+vim.cmd("set cmdheight=1")      -- Changé de 0 à 1 pour éviter "Press ENTER"
 vim.cmd("set termguicolors")
+-- Éviter le message "Press ENTER" au démarrage
+vim.opt.shortmess:append("I") -- Pas de message intro
+vim.opt.shortmess:append("c") -- Pas de messages de completion
+vim.opt.shortmess:append("F") -- Pas de message de fichier
+vim.opt.shortmess:append("W") -- Pas de message "written"
+vim.opt.shortmess:append("A") -- Pas de message ATTENTION
+vim.opt.shortmess:append("s") -- Pas de message "search hit BOTTOM"
+vim.opt.shortmess:append("t") -- Tronquer les messages trop longs
 vim.cmd("set scrolloff=5")
 vim.cmd("autocmd FileType sql setlocal noautoindent")
 vim.cmd("autocmd FileType sql setlocal nosmartindent")
@@ -54,7 +62,7 @@ vim.o.completeopt = "menuone,noselect,preview"
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
+vim.opt.expandtab = false
 vim.bo.softtabstop = 2
 
 vim.lsp.set_log_level("warn")

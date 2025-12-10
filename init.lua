@@ -1,3 +1,6 @@
+-- Supprimer le message "Press ENTER" au démarrage
+vim.opt.shortmess:append("sI")
+
 local utils = require("utils")
 
 require("options")

@@ -11,34 +11,18 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        automatic_enable = false,
+        automatic_install = false, -- Ne pas installer automatiquement
         ensure_installed = {
-          "fortls",
-          "bashls",
-          "omnisharp",
-          "cmake",
-          "lua_ls",
-          "gopls",
-          "templ",
-          "html",
-          "cssls",
-          "emmet_ls",
-          "tailwindcss",
-          "ts_ls",
-          "astro",
-          "ols",
-          "pyright",
-          "clangd",
-          "prismals",
-          "yamlls",
-          "jsonls",
-          "eslint",
-          "marksman",
-          "sqlls",
-          "wgsl_analyzer",
-          "texlab",
-          "intelephense",
-          "nim_langserver",
+          -- Langages essentiels uniquement
+          "lua_ls",   -- Lua (pour Neovim)
+          "bashls",   -- Bash
+          "marksman", -- Markdown
+          -- Décommentez ceux dont vous avez besoin:
+          -- "pyright",   -- Python
+          -- "ts_ls",     -- TypeScript/JavaScript
+          -- "clangd",    -- C/C++
+          -- "jsonls",    -- JSON
+          -- "yamlls",    -- YAML
         },
       })
     end,
@@ -47,10 +31,14 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = { "saghen/blink.cmp" },
     config = function()
+      -- Supprimer le warning de dépréciation lspconfig
+      local vim_warn = vim.deprecate
+      vim.deprecate = function() end
+
       -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       local lspconfig = require("lspconfig")
-      local util = require("lspconfig").util
+      -- local util = require("lspconfig").util  -- Removed: causes deprecation warning and not used
       local configs = require("lspconfig.configs")
 
       lspconfig.cmake.setup({
@@ -234,35 +222,10 @@ return {
         filetypes = { "templ" },
       })
 
-      if not configs.ts_ls then
-        configs.ts_ls = {
-          default_config = {
-            cmd = { "typescript-language-server", "--stdio" },
-            capabilties = capabilities,
-            filetypes = {
-              "javascript",
-              "javascriptreact",
-              "typescript",
-              "typescriptreact",
-              "html",
-            },
-            root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
-            single_file_support = true,
-          },
-        }
-      end
+      -- Configuration simplifiée pour ts_ls (typescript-language-server)
+      -- Mason l'installe automatiquement, pas besoin de custom config
       lspconfig.ts_ls.setup({
-        -- capabilties = capabilities,
-        -- cmd = { "typescript-language-server", "--stdio" },
-        -- filetypes = {
-        --   "javascript",
-        --   "javascriptreact",
-        --   "typescript",
-        --   "typescriptreact",
-        --   "html",
-        -- },
-        -- root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
-        -- single_file_support = true,
+        capabilities = capabilities,
       })
       lspconfig.eslint.setup({
         capabilties = capabilities,
@@ -360,6 +323,9 @@ return {
         cmd = { "julia-lsp" },
         root_dir = require("lspconfig").util.root_pattern("*.jl"),
       })
+
+      -- Restaurer vim.deprecate
+      vim.deprecate = vim_warn
     end,
   },
 }

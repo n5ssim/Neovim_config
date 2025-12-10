@@ -8,6 +8,7 @@ return {
   },
   {
     "3rd/image.nvim",
+    enabled = false, -- Désactivé : cause des erreurs au démarrage
     dependencies = { "luarocks.nvim" },
     config = function()
       require("image").setup({

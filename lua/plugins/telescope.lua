@@ -37,6 +37,9 @@ return {
             override_file_sorter = true,    -- override the file sorter
             case_mode = "smart_case",
           },
+          zoxide = {
+            prompt_title = "[ Répertoires fréquents ]",
+          },
         },
         pickers = {
           colorscheme = {
@@ -80,7 +83,7 @@ return {
   },
   {
     "jvgrootveld/telescope-zoxide",
-    config = function() end,
+    dependencies = { "nvim-telescope/telescope.nvim" },
   },
   {
     "nvim-telescope/telescope-ui-select.nvim",
