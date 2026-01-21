@@ -26,6 +26,7 @@ return {
     ---@module 'blink.cmp'
     opts = {
       keymap = {
+        ["<C-Space>"] = { "show", "fallback" },
         ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
         ["<CR>"] = { "select_and_accept", "fallback" },
@@ -52,7 +53,7 @@ return {
           auto_show_delay_ms = 200,
         },
         menu = {
-          auto_show = true,
+          auto_show = false,
           scrollbar = false,
           draw = {
             columns = {
@@ -111,6 +112,9 @@ return {
       },
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
+        per_filetype = {
+          python = { "path", "snippets", "buffer" }, -- LSP désactivé pour Python
+        },
       },
       fuzzy = { implementation = "prefer_rust_with_warning" },
     },

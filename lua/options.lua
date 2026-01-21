@@ -62,8 +62,19 @@ vim.o.completeopt = "menuone,noselect,preview"
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.expandtab = false
+vim.opt.expandtab = true
 vim.bo.softtabstop = 2
+
+-- Python: 4 espaces pour respecter PEP 8 / flake8
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.expandtab = true
+  end,
+})
 
 vim.lsp.set_log_level("warn")
 
